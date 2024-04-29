@@ -5,10 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HubMc.ru</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- jQuery library -->
+  <script>
+    $(document).ready(function() {
+      // Load donation goal data
+      $.getJSON('https://www.donationalerts.com/widget/goal/7695644?token=j2yvbNmSmY0h4B4xv2Ud', function(data) {
+        var currentAmount = data.amount;
+        var goalAmount = data.goal;
+        var percentage = (currentAmount / goalAmount) * 100;
+        $('.donation-goal .progress-bar').css('width', percentage + '%');
+        $('.donation-goal .amount-raised').text('$' + currentAmount.toFixed(2));
+        $('.donation-goal .goal-amount').text('$' + goalAmount.toFixed(2));
+      });
+    });
+  </script>
 </head>
 <body>
   <header>
-    <h1>HubMc.ru Восстановление Сервера</h1>
+    <h1>Восстановление Сервера HubMc.ru</h1>
   </header>
   <main>
     <section class="slideshow">
@@ -24,19 +38,13 @@
       </div>
       <!-- Add more slides as needed -->
     </section>
-    <section class="donation">
-      <h2>Support Our Cause</h2>
-      <!-- DonationAlerts widget code goes here -->
-      <!-- Example: -->
-      <script src="https://www.donationalerts.com/widget/goal/7695644?token=j2yvbNmSmY0h4B4xv2Ud"></script>
-      <iframe
-        id="da-widget"
-        src="https://www.donationalerts.com/r/alivka200020"
-        frameborder="0"
-        width="100%"
-        height="300px"
-        scrolling="no">
-      </iframe>
+    <section class="donation-goal">
+      <h2>Donation Goal</h2>
+      <div class="progress">
+        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+      <p>Amount Raised: <span class="amount-raised"></span></p>
+      <p>Goal Amount: <span class="goal-amount"></span></p>
     </section>
   </main>
   <footer>
